@@ -13,12 +13,4 @@
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>one.util</groupId>
-            <artifactId>streamex</artifactId>
-            <version>0.8.0</version>
-        </dependency>
-    </dependencies>
-
 </project>
