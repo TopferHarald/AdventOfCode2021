@@ -41,17 +41,13 @@ public class Part2 {
                 else x1--;
             }
             area[x1][y1] += 1;
-        }else {
+        } else {
             while (x1 != x2 && y1 != y2) {
                 area[x1][y1] += 1;
-                if (x1 < x2)
-                    x1++;
-                if (y1 < y2)
-                    y1++;
-                if (x1 > x2)
-                    x1--;
-                if (y1 > y2)
-                    y1--;
+                if (x1 < x2) x1++;
+                if (y1 < y2) y1++;
+                if (x1 > x2) x1--;
+                if (y1 > y2) y1--;
             }
             area[x1][y1] += 1;
         }
