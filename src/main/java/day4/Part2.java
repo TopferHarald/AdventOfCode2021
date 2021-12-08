@@ -10,9 +10,8 @@ import java.util.stream.IntStream;
 
 public class Part2 {
 
-    List<int[][]> boards = new ArrayList<>();
-    List<Integer> doneBoards = new ArrayList<>();
-    boolean done;
+    HashMap<int[][], Boolean> boards = new HashMap<>();
+    int counter = 0;
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         Part2 solver = new Part2();
@@ -23,42 +22,43 @@ public class Part2 {
             solver.fillBoard(list.subList(i,i+5));
         }
         for (String number : draw) {
-            if (!solver.done) {
-                solver.draw(Integer.parseInt(number));
-            }
+            solver.draw(Integer.parseInt(number));
         }
     }
 
     public void draw(int number) {
-        for(int[][] board : boards) {
+        for(int[][] board : boards.keySet()) {
+            if(boards.get(board))
+                continue;
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
-                    if (board[i][j] == number && !done) {
+                    if (board[i][j] == number) {
                         board[i][j] = 0;
-                        checkWin(number);
+                        checkWin(number, board);
                     }
                 }
             }
         }
     }
 
-    public void checkWin(int number) {
-        int sum = 0;
-        for(int[][] board : boards) {
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[0].length; j++) {
-                    sum += board[j][i];
-                }
-                if (IntStream.of(board[i]).sum() == 0 || sum == 0) {
-                    if (!doneBoards.contains(boards.indexOf(board))) {
-                        doneBoards.add(boards.indexOf(board));
-                        if(doneBoards.size() == boards.size())
-                            calcSolution(board, number);
-                    }
-                } else
-                    sum = 0;
-            }
+    public void checkWin(int number, int[][] board) {
+        if (check(board)) {
+            if (counter == 99)
+                calcSolution(board, number);
+            boards.put(board, true);
+            counter++;
         }
+    }
+
+    public static boolean check(int[][] input) {
+        for(int i = 0; i<input.length; i++) {
+            final int index = i;
+            if(Arrays.stream(input[i]).allMatch(val -> val == 0))
+                return true;
+            if(Arrays.stream(input).allMatch(val -> val[index] == 0))
+                return true;
+        }
+        return false;
     }
 
     public void calcSolution(int[][] board, int number) {
@@ -83,6 +83,6 @@ public class Part2 {
             }
             i++;
         }
-        this.boards.add(board);
+        this.boards.put(board, false);
     }
 }
