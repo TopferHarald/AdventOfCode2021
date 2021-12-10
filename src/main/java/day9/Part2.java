@@ -47,7 +47,7 @@ public class Part2 {
 
 
     private int checkBasin(int i, int j, List<Pair<Integer, Integer>> alrdyVisited) {
-		if (heights[i][j] == 99|| heights[i][j] == 9 || alrdyVisited.contains(Pair.with(i,j)))
+		if (heights[i][j] == 99 || heights[i][j] == 9 || alrdyVisited.contains(Pair.with(i,j)))
 			return 0;
 
 		alrdyVisited.add(Pair.with(i,j));
